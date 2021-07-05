@@ -12,15 +12,15 @@ pipeline {
         stage('Pre Test') {
             steps {
                 echo 'Installing dependencies'
-                sh 'go version'
-                sh 'go get -u golang.org/x/lint/golint'
+                bat 'go version'
+                bat 'go get -u golang.org/x/lint/golint'
             }
         }
         
         stage('Build') {
             steps {
                 echo 'Compiling and building'
-                sh 'go build'
+                bat 'go build'
             }
         }
 
@@ -28,11 +28,11 @@ pipeline {
             steps {
                 withEnv(["PATH+GO=${GOPATH}/bin"]){
                     echo 'Running vetting'
-                    sh 'go vet .'
+                    bat 'go vet .'
                     echo 'Running linting'
-                    sh 'golint .'
+                    bat 'golint .'
                     echo 'Running test'
-                    sh 'cd test && go test -v'
+                    bat 'cd test && go test -v'
                 }
             }
         }
